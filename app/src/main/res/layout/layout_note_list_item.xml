@@ -22,7 +22,6 @@
         android:layout_weight="75"
         android:text="Some Note Title"
         android:textColor="#000"
-        android:lines="1"
         android:padding="10dp" />
 
     <View

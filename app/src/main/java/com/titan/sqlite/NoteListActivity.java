@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.titan.sqlite.adapters.NotesRecyclerAdapter;
 import com.titan.sqlite.models.Note;
+import com.titan.sqlite.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,9 @@ public class NoteListActivity extends AppCompatActivity {
     private void initRecyclerView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
+        recyclerView.addItemDecoration(itemDecorator);
+
         notesRecyclerAdapter = new NotesRecyclerAdapter(notes);
         recyclerView.setAdapter(notesRecyclerAdapter);
     }
