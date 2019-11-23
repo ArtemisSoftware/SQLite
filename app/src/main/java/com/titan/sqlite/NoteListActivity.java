@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.titan.sqlite.adapters.NotesRecyclerAdapter;
@@ -13,13 +14,14 @@ import com.titan.sqlite.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
-public class NoteListActivity extends AppCompatActivity {
+public class NoteListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
 
 
     private RecyclerView recyclerView;
 
     private ArrayList<Note> notes = new ArrayList<>();
     private NotesRecyclerAdapter notesRecyclerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,15 @@ public class NoteListActivity extends AppCompatActivity {
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         recyclerView.addItemDecoration(itemDecorator);
 
-        notesRecyclerAdapter = new NotesRecyclerAdapter(notes);
+        notesRecyclerAdapter = new NotesRecyclerAdapter(notes, this);
         recyclerView.setAdapter(notesRecyclerAdapter);
+    }
+
+
+    @Override
+    public void onNoteClick(int position) {
+
+        //Intent intent = new Intent(this, );
+        //startActivity(intent);
     }
 }
