@@ -14,7 +14,7 @@ import com.titan.sqlite.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
-public class NoteListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
+public class NotesListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
 
 
     private RecyclerView recyclerView;
@@ -26,7 +26,7 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_list);
+        setContentView(R.layout.activity_notes_list);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -62,7 +62,7 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     @Override
     public void onNoteClick(int position) {
 
-        //Intent intent = new Intent(this, );
-        //startActivity(intent);
+        Intent intent = new Intent(this, NoteActivity.class);
+        startActivity(intent);
     }
 }
