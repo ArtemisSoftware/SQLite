@@ -15,6 +15,7 @@ public class NoteActivity extends AppCompatActivity {
     private TextView txtTitle;
 
     private boolean isNewNote;
+    private Note note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +28,35 @@ public class NoteActivity extends AppCompatActivity {
 
         if(getIncomingIntent()) {
             //EDIT MODE
-            Note note = getIntent().getParcelableExtra("selected_note");
+            setNewNoteProperties();
         }
         else{
             //VIEW MODE
+            setNoteProperties();
         }
     }
 
     private boolean getIncomingIntent(){
         if(getIntent().hasExtra("selected_note")) {
+            note = getIntent().getParcelableExtra("selected_note");
             isNewNote = false;
             return false;
         }
 
         isNewNote = true;
         return true;
+    }
+
+    private void setNoteProperties(){
+
+        txtTitle.setText(note.getTitle());
+        editTitle.setText(note.getTitle());
+        linedEditText.setText(note.getContent());
+    }
+
+    private void setNewNoteProperties(){
+
+        txtTitle.setText("Note title");
+        editTitle.setText("Note title");
     }
 }
