@@ -2,10 +2,12 @@ package com.titan.sqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -52,6 +54,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         else{
             //VIEW MODE
             setNoteProperties();
+            disableContentInteraction();
         }
 
         setListeners();
@@ -65,6 +68,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         editTitle.setVisibility(View.VISIBLE);
 
         mode = EDIT_MODE_ENABLED;
+
+        enableContentInteraction();
     }
 
     private void disableEditMode(){
@@ -75,8 +80,23 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         editTitle.setVisibility(View.GONE);
 
         mode = EDIT_MODE_DISABLED;
+
+        disableContentInteraction();
+
+        hideSoftKeyboard();
     }
 
+    private void hideSoftKeyboard(){
+
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = this.getCurrentFocus();
+
+        if(view == null){
+            view = new View(this);
+        }
+
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     private void setListeners(){
         linedEditText.setOnTouchListener(this);
@@ -98,6 +118,22 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         return true;
     }
 
+
+    private void disableContentInteraction(){
+        linedEditText.setKeyListener(null);
+        linedEditText.setFocusable(false);
+        linedEditText.setFocusableInTouchMode(false);
+        linedEditText.setCursorVisible(false);
+        linedEditText.clearFocus();
+    }
+
+    private void enableContentInteraction(){
+        linedEditText.setKeyListener(new EditText(this).getKeyListener());
+        linedEditText.setFocusable(true);
+        linedEditText.setFocusableInTouchMode(true);
+        linedEditText.setCursorVisible(true);
+        linedEditText.requestFocus();
+    }
     private void setNoteProperties(){
 
         txtTitle.setText(note.getTitle());
@@ -128,6 +164,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         switch (v.getId()){
 
             case R.id.toolbar_check:{
+                hideSoftKeyboard();
                 disableEditMode();
                 break;
             }
