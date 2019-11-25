@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.titan.sqlite.models.Note;
 
-public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
 
     private LinedEditText linedEditText;
     private EditText editTitle;
@@ -81,6 +81,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     private void setListeners(){
         linedEditText.setOnTouchListener(this);
         gestureDetector = new GestureDetector(this,this);
+        txtTitle.setOnClickListener(this);
+        check.setOnClickListener(this);
     }
 
     private boolean getIncomingIntent(){
@@ -118,6 +120,38 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onDoubleTap(MotionEvent e) {
         enabledEditMode();
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.toolbar_check:{
+                disableEditMode();
+                break;
+            }
+
+            case R.id.note_text_title:{
+                enabledEditMode();
+                editTitle.requestFocus();
+                editTitle.setSelection(editTitle.length());
+                break;
+            }
+
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if(mode == EDIT_MODE_ENABLED){
+            onClick(check);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -162,4 +196,6 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
+
+
 }
