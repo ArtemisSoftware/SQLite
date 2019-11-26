@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.titan.sqlite.adapters.NotesRecyclerAdapter;
 import com.titan.sqlite.models.Note;
 import com.titan.sqlite.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
-public class NotesListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener {
+public class NotesListActivity extends AppCompatActivity implements NotesRecyclerAdapter.OnNoteListener, View.OnClickListener {
 
 
     private RecyclerView recyclerView;
@@ -29,6 +31,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
         setContentView(R.layout.activity_notes_list);
 
         recyclerView = findViewById(R.id.recyclerView);
+        findViewById(R.id.fab).setOnClickListener(this);
 
         initRecyclerView();
         insertFakeNotes();
@@ -64,6 +67,12 @@ public class NotesListActivity extends AppCompatActivity implements NotesRecycle
 
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtra("selected_note", notes.get(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent (this, NoteActivity.class);
         startActivity(intent);
     }
 }
