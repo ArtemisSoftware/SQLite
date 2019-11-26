@@ -149,6 +149,24 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("mode", mode);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle saveInstanceState){
+        super.onRestoreInstanceState(saveInstanceState);
+
+        mode = saveInstanceState.getInt("mode");
+
+        if(mode == EDIT_MODE_ENABLED){
+            enabledEditMode();
+        }
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
     }
