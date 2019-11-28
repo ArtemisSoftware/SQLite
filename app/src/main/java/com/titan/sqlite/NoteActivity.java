@@ -26,6 +26,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
 
     private boolean isNewNote;
     private Note note;
+    private Note finalNote;
 
     private GestureDetector gestureDetector;
 
@@ -75,7 +76,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
 
 
     private void saveNewNote(){
-        repository.insertNoteTask(note);
+        repository.insertNoteTask(finalNote);
     }
 
     private void enabledEditMode(){
@@ -103,7 +104,21 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
 
         hideSoftKeyboard();
 
-        saveChanges();
+        String temp = linedEditText.getText().toString();
+        temp = temp.replace("\n", "");
+        temp = temp.replace(" ", "");
+
+        if(temp.length() > 0){
+            finalNote.setTitle(editTitle.getText().toString());
+            finalNote.setContent(linedEditText.getText().toString());
+            String timeStamp = "Jan 2019";
+
+            finalNote.setTimestamp(timeStamp);
+
+            if(!finalNote.getContent().equals(note.getContent()) || !finalNote.getTitle().equals(note.getTitle())){
+                saveChanges();
+            }
+        }
     }
 
     private void hideSoftKeyboard(){
@@ -129,6 +144,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean getIncomingIntent(){
         if(getIntent().hasExtra("selected_note")) {
             note = getIntent().getParcelableExtra("selected_note");
+            finalNote = getIntent().getParcelableExtra("selected_note");
             mode = EDIT_MODE_DISABLED;
             isNewNote = false;
             return false;
@@ -166,6 +182,11 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
 
         txtTitle.setText("Note title");
         editTitle.setText("Note title");
+
+        note = new Note();
+        finalNote = new Note();
+        note.setTitle("Note title");
+        finalNote.setTitle("Note title");
     }
 
     @Override
