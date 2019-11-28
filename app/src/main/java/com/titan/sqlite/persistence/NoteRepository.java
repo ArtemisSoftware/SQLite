@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.titan.sqlite.async.DeleteAsyncTask;
 import com.titan.sqlite.async.InsertAsyncTask;
+import com.titan.sqlite.async.UpdateAsyncTask;
 import com.titan.sqlite.models.Note;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class NoteRepository {
     }
 
     public void updateNoteTask(Note note){
-
+        new UpdateAsyncTask(noteDataBase.getNoteDao()) .execute(note);
     }
 
     public LiveData<List<Note>> retrieveNotesTask(){
