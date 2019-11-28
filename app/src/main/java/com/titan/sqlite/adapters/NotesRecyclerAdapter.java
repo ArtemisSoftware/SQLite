@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.titan.sqlite.R;
 import com.titan.sqlite.models.Note;
+import com.titan.sqlite.util.Utility;
 
 import java.util.ArrayList;
 
@@ -34,8 +35,20 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.timestamp.setText(notes.get(position).getTimestamp());
-        holder.title.setText(notes.get(position).getTitle());
+        try{
+            String month = notes.get(position).getTimestamp().substring(0,2);
+            month = Utility.getMonthFromNumber(month);
+            String year = notes.get(position).getTimestamp().substring(3);
+            String timeStamp = month + " " + year;
+
+            holder.timestamp.setText(timeStamp);
+            holder.title.setText(notes.get(position).getTitle());
+        }
+        catch(NullPointerException e){
+
+        }
+
+
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.titan.sqlite.models.Note;
 import com.titan.sqlite.persistence.NoteRepository;
+import com.titan.sqlite.util.Utility;
 
 public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener, View.OnClickListener, TextWatcher {
@@ -114,7 +115,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         if(temp.length() > 0){
             finalNote.setTitle(editTitle.getText().toString());
             finalNote.setContent(linedEditText.getText().toString());
-            String timeStamp = "Jan 2019";
+            String timeStamp = Utility.getCurrentTimestamp();
 
             finalNote.setTimestamp(timeStamp);
 
