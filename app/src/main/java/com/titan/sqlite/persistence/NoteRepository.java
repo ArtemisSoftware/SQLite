@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.titan.sqlite.async.InsertAsyncTask;
 import com.titan.sqlite.models.Note;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class NoteRepository {
     }
 
     public void insertNoteTask(Note note){
-
+        new InsertAsyncTask(noteDataBase.getNoteDao()).execute(note);
     }
 
     public void updateNoteTask(Note note){

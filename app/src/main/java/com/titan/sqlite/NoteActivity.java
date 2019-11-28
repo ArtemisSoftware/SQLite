@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.titan.sqlite.models.Note;
+import com.titan.sqlite.persistence.NoteRepository;
 
 public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
 
@@ -31,6 +32,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     private static final int EDIT_MODE_ENABLED = 1;
     private static final int EDIT_MODE_DISABLED = 0;
     private int mode;
+    private NoteRepository repository;
 
 
     @Override
@@ -46,6 +48,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         check = findViewById(R.id.toolbar_check);
         backArrow = findViewById(R.id.toolbar_back_arrow);
 
+        repository = new NoteRepository(this);
+
         if(getIncomingIntent()) {
             //EDIT MODE
             setNewNoteProperties();
@@ -58,6 +62,20 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
         setListeners();
+    }
+
+    private void saveChanges(){
+        if(isNewNote){
+            saveNewNote();
+        }
+        else{
+
+        }
+    }
+
+
+    private void saveNewNote(){
+        repository.insertNoteTask(note);
     }
 
     private void enabledEditMode(){
@@ -84,6 +102,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         disableContentInteraction();
 
         hideSoftKeyboard();
+
+        saveChanges();
     }
 
     private void hideSoftKeyboard(){
