@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +18,8 @@ import android.widget.TextView;
 import com.titan.sqlite.models.Note;
 import com.titan.sqlite.persistence.NoteRepository;
 
-public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, View.OnClickListener {
+public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener,
+        GestureDetector.OnDoubleTapListener, View.OnClickListener, TextWatcher {
 
     private LinedEditText linedEditText;
     private EditText editTitle;
@@ -139,6 +142,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         txtTitle.setOnClickListener(this);
         check.setOnClickListener(this);
         backArrow.setOnClickListener(this);
+        editTitle.addTextChangedListener(this);
+
     }
 
     private boolean getIncomingIntent(){
@@ -257,6 +262,11 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        txtTitle.setText((s.toString()));
+    }
+
+    @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
         return false;
     }
@@ -300,4 +310,15 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }
